@@ -1,15 +1,15 @@
 # NFS-e Ginfes Suzano
 
-## 🔨 Funcionalidades do projeto
-- Emitir de forma automatica uma NFS-e
+## 🔨 Project Features
+- Automatically issue NFS-e
 
-## ✔️ Técnicas e tecnologias utilizadas
+## ✔️ Techniques and technologies used
 - Python
 - Selenium
 
-## 🛠️ Para abrir e rodar o projeto
+## 🛠️ To open and run the project
 
-### Lembre-se de ter suas variaveis de ambiente na raiz do projeto
+### Remember to have your environment variables in the project root
 
 ```bash
 git clone https://github.com/fehenriq/nfse.git
@@ -31,5 +31,5 @@ source .venv/bin/activate #Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## 📈 Melhorias
-- Baixar a NFS-e e enviar por E-mail/Whatsapp
+## 📈 Improvements
+- Download the NFS-e and send it by E-mail/Whatsapp
