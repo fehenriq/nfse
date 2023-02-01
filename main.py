@@ -10,16 +10,17 @@ import time
 
 load_dotenv()
 
-cnpj = str(os.getenv("CNPJ"))
-password = str(os.getenv("PASSWORD"))
-cnpj_s2b = str(os.getenv("CNPJ_S2B"))
+cnpj_owner = str(os.getenv("CNPJ_OWNER"))
+cnpj_owner_dots = str(os.getenv("CNPJ_OWNER_DOTS"))
+email_owner = str(os.getenv("EMAIL_OWNER"))
+email_password = str(os.getenv("EMAIL_PASSWORD"))
+ginfes_password = str(os.getenv("GINFES_PASSWORD"))
 salary = str(os.getenv("SALARY"))
-cnpj_dots = str(os.getenv("CNPJ_DOTS"))
 agency = str(os.getenv("AGENCY"))
 account = str(os.getenv("ACCOUNT"))
-email = str(os.getenv("EMAIL"))
-email_password = str(os.getenv("EMAIL_PASSWORD"))
-email_s2b = str(os.getenv("EMAIL_S2B"))
+cnpj_taker = str(os.getenv("CNPJ_TAKER"))
+email_taker = str(os.getenv("EMAIL_TAKER"))
+description_nfse = "Reparação e manutenção de computadores e de equipamentos periféricos."
 
 service = Service(ChromeDriverManager().install())
 browser = webdriver.Chrome(service=service)
@@ -36,15 +37,15 @@ def main():
     
     browser.get('https://mail.google.com/mail/')
     download()
-    sendEmail()
+    send_email()
 
 
 def login():
     time.sleep(4)
 
     browser.find_element(By.XPATH, '//*[@id="principal"]/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr/td[1]/table/tbody/tr[1]/td/table/tbody/tr/td[1]/table/tbody/tr[1]/td/table/tbody/tr/td[1]/img').click()
-    browser.find_element(By.XPATH, '//*[@id="ext-gen29"]').send_keys(cnpj)
-    browser.find_element(By.XPATH, '//*[@id="ext-gen33"]').send_keys(password)
+    browser.find_element(By.XPATH, '//*[@id="ext-gen29"]').send_keys(cnpj_owner)
+    browser.find_element(By.XPATH, '//*[@id="ext-gen33"]').send_keys(ginfes_password)
 
     time.sleep(2)
 
@@ -66,7 +67,7 @@ def search_taker():
     
     time.sleep(2)
     
-    browser.find_element(By.XPATH, '/html/body/div[1]/table/tbody/tr[2]/td/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr/td/table/tbody/tr/td/div/div[2]/div/div/div/div/table[1]/tbody/tr/td/div/div/div/form/fieldset/div/div/fieldset[1]/div/div/table/tbody/tr[2]/td/div/div/div/div/div[1]/div/div/div/div[1]/input').send_keys(cnpj_s2b)
+    browser.find_element(By.XPATH, '/html/body/div[1]/table/tbody/tr[2]/td/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr/td/table/tbody/tr/td/div/div[2]/div/div/div/div/table[1]/tbody/tr/td/div/div/div/form/fieldset/div/div/fieldset[1]/div/div/table/tbody/tr[2]/td/div/div/div/div/div[1]/div/div/div/div[1]/input').send_keys(cnpj_taker)
     
     time.sleep(1)
     
@@ -82,7 +83,7 @@ def services_provided():
     time.sleep(1)
     pyautogui.press('enter')
     
-    browser.find_element(By.XPATH, '/html/body/div[1]/table/tbody/tr[2]/td/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr/td/table/tbody/tr/td/div/div[2]/div/div[2]/div/div/div/div/div/form/fieldset[3]/div/div/div[2]/div/div/div/div[1]/div/div/div/div[1]/textarea').send_keys("Reparação e manutenção de computadores e de equipamentos periféricos.")
+    browser.find_element(By.XPATH, '/html/body/div[1]/table/tbody/tr[2]/td/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr/td/table/tbody/tr/td/div/div[2]/div/div[2]/div/div/div/div/div/form/fieldset[3]/div/div/div[2]/div/div/div/div[1]/div/div/div/div[1]/textarea').send_keys(description_nfse)
     browser.find_element(By.XPATH, '/html/body/div[1]/table/tbody/tr[2]/td/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr/td/table/tbody/tr/td/div/div[2]/div/div[2]/div/div/div/div/div/form/fieldset[5]/div/div/div[1]/div/div/div/div[1]/div/div/div/div[1]/input').send_keys(salary)
     
     time.sleep(2)
@@ -107,21 +108,21 @@ def download():
     pyautogui.click(x=1377, y=371)
 
 
-def sendEmail():
-    body = f"""
+def send_email():
+    body_email = f"""
     Segue NFS-e em anexo.\n
     
     Estes são os dados da minha conta no Banco Inter:
     BANCO INTER - 077
     FELIPE RODRIGUES MEI
-    CNPJ (Pix): {cnpj_dots}
+    CNPJ (Pix): {cnpj_owner_dots}
     Agência: {agency}
     Conta: {account}
     """
     
     pyautogui.click(x=2195, y=452)
     time.sleep(5)
-    browser.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[1]/div/form/span/section/div/div/div[1]/div/div[1]/div/div[1]/input').send_keys(email)
+    browser.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[1]/div/form/span/section/div/div/div[1]/div/div[1]/div/div[1]/input').send_keys(email_owner)
     browser.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[2]/div/div[1]/div/div/button/span').click()
     time.sleep(2)
     browser.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[1]/div/form/span/section[2]/div/div/div[1]/div[1]/div/div/div/div/div[1]/div/div[1]/input').send_keys(email_password)
@@ -129,13 +130,13 @@ def sendEmail():
     time.sleep(5)
     browser.find_element(By.XPATH, '/html/body/div[7]/div[3]/div/div[2]/div[2]/div[1]/div[1]/div/div').click()
     time.sleep(1)
-    pyperclip.copy(email_s2b)
+    pyperclip.copy(email_taker)
     pyautogui.hotkey('ctrl', 'v')
     pyautogui.press('tab')
     pyperclip.copy('NFS-e')
     pyautogui.hotkey('ctrl', 'v')
     pyautogui.press('tab')
-    pyperclip.copy(body)
+    pyperclip.copy(body_email)
     pyautogui.hotkey('ctrl', 'v')
     pyautogui.press('tab')
     pyautogui.press('tab')
