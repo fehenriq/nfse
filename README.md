@@ -2,10 +2,14 @@
 
 ## 🔨 Project Features
 - Automatically issue NFS-e
+- Download the issued NFS-e and send it by email
+- The email contains bank account details
 
 ## ✔️ Techniques and technologies used
 - Python
 - Selenium
+- PyAutoGUI
+- Pyperclip
 
 ## 🛠️ To open and run the project
 
@@ -30,6 +34,3 @@ source .venv/bin/activate #Windows: .venv\Scripts\activate
 ```bash
 pip install -r requirements.txt
 ```
-
-## 📈 Improvements
-- Download the NFS-e and send it by E-mail/Whatsapp
