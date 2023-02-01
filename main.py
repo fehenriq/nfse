@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from dotenv import load_dotenv
 import pyautogui
+import pyperclip
 import os
 import time
 
@@ -13,6 +14,12 @@ cnpj = str(os.getenv("CNPJ"))
 password = str(os.getenv("PASSWORD"))
 cnpj_s2b = str(os.getenv("CNPJ_S2B"))
 salary = str(os.getenv("SALARY"))
+cnpj_dots = str(os.getenv("CNPJ_DOTS"))
+agency = str(os.getenv("AGENCY"))
+account = str(os.getenv("ACCOUNT"))
+email = str(os.getenv("EMAIL"))
+email_password = str(os.getenv("EMAIL_PASSWORD"))
+email_s2b = str(os.getenv("EMAIL_S2B"))
 
 service = Service(ChromeDriverManager().install())
 browser = webdriver.Chrome(service=service)
@@ -24,8 +31,12 @@ def main():
     login()
     search_taker()
     services_provided()
-
     time.sleep(5)
+    # issue()
+    
+    browser.get('https://mail.google.com/mail/')
+    download()
+    sendEmail()
 
 
 def login():
@@ -71,13 +82,72 @@ def services_provided():
     time.sleep(1)
     pyautogui.press('enter')
     
-    browser.find_element(By.XPATH, '/html/body/div[1]/table/tbody/tr[2]/td/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr/td/table/tbody/tr/td/div/div[2]/div/div[2]/div/div/div/div/div/form/fieldset[3]/div/div/div[2]/div/div/div/div[1]/div/div/div/div[1]/textarea').send_keys("DESCRIÇÃO")
+    browser.find_element(By.XPATH, '/html/body/div[1]/table/tbody/tr[2]/td/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr/td/table/tbody/tr/td/div/div[2]/div/div[2]/div/div/div/div/div/form/fieldset[3]/div/div/div[2]/div/div/div/div[1]/div/div/div/div[1]/textarea').send_keys("Reparação e manutenção de computadores e de equipamentos periféricos.")
     browser.find_element(By.XPATH, '/html/body/div[1]/table/tbody/tr[2]/td/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr/td/table/tbody/tr/td/div/div[2]/div/div[2]/div/div/div/div/div/form/fieldset[5]/div/div/div[1]/div/div/div/div[1]/div/div/div/div[1]/input').send_keys(salary)
     
-    time.sleep(1)
+    time.sleep(2)
     
     browser.find_element(By.XPATH, '/html/body/div[1]/table/tbody/tr[2]/td/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr/td/table/tbody/tr/td/div/div[2]/div/div[2]/div/div/div/div/div/form/table/tbody/tr/td[2]/table/tbody/tr/td/table/tbody/tr/td[2]/em/button').click()
 
+    
+def issue():    
+    time.sleep(2)
+    
+    browser.find_element(By.XPATH, '/html/body/div[1]/table/tbody/tr[2]/td/table/tbody/tr[2]/td/table/tbody/tr/td[2]/table/tbody/tr/td/table/tbody/tr/td/div/div[2]/div/div[3]/div/div/div/div/div/form/table[2]/tbody/tr/td[2]/table/tbody/tr/td/table/tbody/tr/td[2]/em/button').click()
 
+    time.sleep(10)
+    
+    browser.find_element(By.XPATH, '/html/body/div[10]/div[2]/div[2]/div/div/div/div/div/table/tbody/tr/td[1]/table/tbody/tr/td[2]/em/button').click()
+
+
+def download():    
+    pyautogui.click(x=1251, y=169)
+    time.sleep(1)
+    pyautogui.click(x=1803, y=132)
+    pyautogui.click(x=1377, y=371)
+
+
+def sendEmail():
+    body = f"""
+    Segue NFS-e em anexo.\n
+    
+    Estes são os dados da minha conta no Banco Inter:
+    BANCO INTER - 077
+    FELIPE RODRIGUES MEI
+    CNPJ (Pix): {cnpj_dots}
+    Agência: {agency}
+    Conta: {account}
+    """
+    
+    pyautogui.click(x=2195, y=452)
+    time.sleep(5)
+    browser.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[1]/div/form/span/section/div/div/div[1]/div/div[1]/div/div[1]/input').send_keys(email)
+    browser.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[2]/div/div[1]/div/div/button/span').click()
+    time.sleep(2)
+    browser.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[1]/div/form/span/section[2]/div/div/div[1]/div[1]/div/div/div/div/div[1]/div/div[1]/input').send_keys(email_password)
+    browser.find_element(By.XPATH, '/html/body/div[1]/div[1]/div[2]/div/c-wiz/div/div[2]/div/div[2]/div/div[1]/div/div/button/span').click()
+    time.sleep(5)
+    browser.find_element(By.XPATH, '/html/body/div[7]/div[3]/div/div[2]/div[2]/div[1]/div[1]/div/div').click()
+    time.sleep(1)
+    pyperclip.copy(email_s2b)
+    pyautogui.hotkey('ctrl', 'v')
+    pyautogui.press('tab')
+    pyperclip.copy('NFS-e')
+    pyautogui.hotkey('ctrl', 'v')
+    pyautogui.press('tab')
+    pyperclip.copy(body)
+    pyautogui.hotkey('ctrl', 'v')
+    pyautogui.press('tab')
+    pyautogui.press('tab')
+    pyautogui.press('tab')
+    pyautogui.press('enter')
+    time.sleep(1)
+    pyautogui.click(x=2195, y=452)
+    pyautogui.click(x=2820, y=381)
+    time.sleep(2)
+    pyautogui.press('tab')
+    pyautogui.press('enter')
+    
+    
 if __name__ == '__main__':
     main()
