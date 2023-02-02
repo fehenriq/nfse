@@ -26,19 +26,20 @@ service = Service(ChromeDriverManager().install())
 browser = webdriver.Chrome(service=service)
 
 
-def main():    
+
+def main():
     browser.get('https://suzano.ginfes.com.br/')
-    
     login()
     search_taker()
     services_provided()
     time.sleep(5)
-    # issue()
+    issue()
     
     browser.get('https://mail.google.com/mail/')
     download()
+    time.sleep(20)
     send_email()
-
+    
 
 def login():
     time.sleep(4)
@@ -103,10 +104,10 @@ def issue():
 
 
 def download():    
-    pyautogui.click(x=1251, y=169)
+    pyautogui.click(x=2562, y=250)
     time.sleep(1)
-    pyautogui.click(x=1803, y=132)
-    pyautogui.click(x=1377, y=371)
+    pyautogui.click(x=2735, y=213)
+    pyautogui.click(x=2820, y=385)
 
 
 def send_email():
