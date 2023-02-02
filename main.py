@@ -99,6 +99,7 @@ def issue():
     time.sleep(10)
     
     browser.find_element(By.XPATH, '/html/body/div[10]/div[2]/div[2]/div/div/div/div/div/table/tbody/tr/td[1]/table/tbody/tr/td[2]/em/button').click()
+    browser.find_element(By.XPATH, '/html/body/div[21]/div[2]/div[2]/div/div/div/div/div/table/tbody/tr/td[1]/table/tbody/tr/td[2]/em/button').click()
 
 
 def download():    
