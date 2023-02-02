@@ -26,7 +26,6 @@ service = Service(ChromeDriverManager().install())
 browser = webdriver.Chrome(service=service)
 
 
-
 def main():
     browser.get('https://suzano.ginfes.com.br/')
     login()
