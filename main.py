@@ -15,11 +15,18 @@ cnpj_owner_dots = str(os.getenv("CNPJ_OWNER_DOTS"))
 email_owner = str(os.getenv("EMAIL_OWNER"))
 email_password = str(os.getenv("EMAIL_PASSWORD"))
 ginfes_password = str(os.getenv("GINFES_PASSWORD"))
-salary = str(os.getenv("SALARY"))
-agency = str(os.getenv("AGENCY"))
-account = str(os.getenv("ACCOUNT"))
+
+account_agency = str(os.getenv("ACCOUNT_AGENCY"))
+account_number = str(os.getenv("ACCOUNT_NUMBER"))
+account_name = str(os.getenv("ACCOUNT_NAME"))
+
+bank_name = str(os.getenv("BANK_NAME"))
+bank_code = str(os.getenv("BANK_CODE"))
+
 cnpj_taker = str(os.getenv("CNPJ_TAKER"))
 email_taker = str(os.getenv("EMAIL_TAKER"))
+
+salary = str(os.getenv("SALARY"))
 description_nfse = "Reparação e manutenção de computadores e de equipamentos periféricos."
 
 service = Service(ChromeDriverManager().install())
@@ -113,12 +120,12 @@ def send_email():
     body_email = f"""
     Segue NFS-e em anexo.\n
     
-    Estes são os dados da minha conta no Banco Inter:
-    BANCO INTER - 077
-    FELIPE RODRIGUES MEI
+    Estes são os dados da minha conta no {bank_name}:
+    BANCO {bank_name} - {bank_code}
+    {account_name}
     CNPJ (Pix): {cnpj_owner_dots}
-    Agência: {agency}
-    Conta: {account}
+    Agência: {account_agency}
+    Conta: {account_number}
     """
     
     pyautogui.click(x=2195, y=452)
